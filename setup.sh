@@ -27,6 +27,11 @@ if ! command -v rpm || ! command -v systemctl; then
   exit 1
 fi
 
+if ! cat /dev/net/tun 2>&1 | grep -q 'File descriptor in bad state'; then
+  echo "TAP driver not enabled, enable it your vps panel."
+  exit 1
+fi
+
 yum clean all
 yum makecache
 yum install -y epel-release
