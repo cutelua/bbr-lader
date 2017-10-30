@@ -1,0 +1,9 @@
+{
+    "server":"0.0.0.0",
+    "server_port":443,
+    "password":"lkl666",
+    "timeout":600,
+    "method":"rc4-md5",
+    "plugin": "obfs-server",
+    "plugin_opts": "obfs=tls;obfs-host=outlook.office.com;failover=outlook.office.com:443"
+}
