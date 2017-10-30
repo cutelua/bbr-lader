@@ -76,23 +76,23 @@ Set your clients as listed below, and everything should just work.
 
 Config 1
 
-* IP: YOUR.SERVER.IP
-* PORT: 80
-* PASSWORD: lkl666
-* METHOD: rc4-md5
-* PLUGIN: obfs-local
-* PLUGIN_OPTS: obfs=http;obfs-host=outlook.office.com
+* IP: `YOUR.SERVER.IP`
+* PORT: `80`
+* PASSWORD: `lkl666`
+* METHOD: `rc4-md5`
+* PLUGIN: `obfs-local`
+* PLUGIN_OPTS: `obfs=http;obfs-host=outlook.office.com`
 
 Config 2
 
-* IP: YOUR.SERVER.IP
-* PORT: 443
-* PASSWORD: lkl666
-* METHOD: rc4-md5
-* PLUGIN: obfs-local
-* PLUGIN_OPTS: obfs=tls;obfs-host=outlook.office.com
+* IP: `YOUR.SERVER.IP`
+* PORT: `443`
+* PASSWORD: `lkl666`
+* METHOD: `rc4-md5`
+* PLUGIN: `obfs-local`
+* PLUGIN_OPTS: `obfs=tls;obfs-host=outlook.office.com`
 
-For security reasons, you should (or not if you're lazy) change the PASSWORD, or METHOD, as in your own flavor. To do so, edit file under `/etc/shadowsocks-libev` accordingly.
+For security reasons, you should (or not if you're lazy) change the PASSWORD/METHOD in your own flavor. To do so, edit files under `/etc/shadowsocks-libev` accordingly.
 
 On finished editing, restart shadowsocks service by commands:
 
