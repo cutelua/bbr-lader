@@ -99,7 +99,7 @@ Config 2
 * PLUGIN: `obfs-local`
 * PLUGIN_OPTS: `obfs=tls;obfs-host=outlook.office.com`
 
-For security reasons, you should (or not if you're lazy) change the PASSWORD/METHOD in your own flavor. To do so, edit files under `/etc/shadowsocks-libev` accordingly.
+For security reasons, it'd be better for you (or not if you're lazy) to change the PASSWORD/METHOD in your own flavor. To do so, edit files under `/etc/shadowsocks-libev` accordingly.
 
 On finished editing, restart shadowsocks service by commands:
 
