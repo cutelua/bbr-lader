@@ -42,12 +42,19 @@ And with some more applications installed from OS sources (epel repository).
 * dependencies ...(pcre openssl mbedtls libsodium libev c-ares libcap)
 
 
-### How do I get set up? ###
-Under Centos 7 64bit OS, run `./setup.sh`
+### How do I set up? ###
+
+Under Centos 7 64bit OS, run 
+
+```
+yum install -y git
+git clone https://github.com/cutelua/bbr-lader.git
+./bbr-lader/setup.sh
+```
 
 ### Why not other OSs ? ###
 
-Mostly becaulse binary compatable, `obfs-server` and `shadowsocks-libev` need to recompile to match other OSs.
+Since this solution is for lowend vps which provide limited OSs to choose. Among those providers, CentOS 7 is rather common. Considering binary compatability, `obfs-server` and `shadowsocks-libev` should work also on Fedora but I never tested.
 
 ### How to compile (skip this if you're a normal user) ###
 
