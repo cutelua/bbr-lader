@@ -35,8 +35,8 @@ fi
 yum clean all
 yum makecache
 yum install -y epel-release
-yum install -y haproxy iptables-services pcre openssl mbedtls libsodium libev c-ares libcap
-rpm -Uvh $__dir/progs/shadowsocks-libev*.rpm
+yum install -y haproxy iptables-services
+yum localinstall -y $__dir/progs/shadowsocks-libev*.rpm
 
 install -m755 $__dir/progs/obfs-server /usr/local/bin/
 setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/obfs-server
