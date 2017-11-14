@@ -27,7 +27,7 @@
 
 By combinating several components (graph above), this solution makes it possible to have tcp-bbr stack running on non-hardwared virtualizations (specificly, openvz). But this also works on kvm/vmware/everything else, and without installing third party kernels and boot configures.
 
-### What are them concisted of ?###
+### What are them concisted of ?
 
 The project contains binary executables, which are complied from projects listed below:
 
