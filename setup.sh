@@ -66,7 +66,7 @@ systemctl start shadowsocks-libev-server@obfstls
 install -m644 $__dir/confs/iptables /etc/sysconfig/
 systemctl disable firewalld || true
 systemctl enable iptables
-systemctl start iptables
+systemctl restart iptables
 
 # sysctl
 if ! sysctl net.ipv4.ip_forward | grep '= 1'; then
