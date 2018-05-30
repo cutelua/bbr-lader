@@ -32,6 +32,16 @@ if ! cat /dev/net/tun 2>&1 | grep -q 'File descriptor in bad state'; then
   exit 1
 fi
 
+echo "Enter Port for shadowsocks-bbr:"
+read PORT
+echo "Enter Password for shadowsocks-bbr:"
+read PASS
+
+if [[ -z "$PORT" || -z "$PASS" ]]; then
+  echo "port / pass must not be empty."
+  exit 1
+fi
+
 yum clean all
 yum makecache
 yum install -y epel-release
@@ -47,6 +57,8 @@ ifup tap0 || true
 
 install -m644 $__dir/confs/haproxy.cfg /etc/haproxy/
 install -m644 $__dir/confs/haproxy.service /etc/systemd/system/
+sed -i "s/##PORT##/$PORT/" /etc/haproxy/haproxy.cfg
+
 systemctl daemon-reload
 systemctl enable haproxy.service
 systemctl start haproxy.service
@@ -57,10 +69,9 @@ ping -c4 10.0.0.2
 
 # shadowsocks
 install -m644 $__dir/confs/*.json /etc/shadowsocks-libev
-systemctl enable shadowsocks-libev-server@obfshttp
-systemctl enable shadowsocks-libev-server@obfstls
-systemctl start shadowsocks-libev-server@obfshttp
-systemctl start shadowsocks-libev-server@obfstls
+sed -i "s/##PORT##/$PORT/; s/##PASS##/$PASS/;" /etc/shadowsocks-libev/ss.json 
+systemctl enable shadowsocks-libev-server@ss
+systemctl start shadowsocks-libev-server@ss
 
 # iptables
 install -m644 $__dir/confs/iptables /etc/sysconfig/
