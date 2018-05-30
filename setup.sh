@@ -62,6 +62,7 @@ sed -i "s/##PORT##/$PORT/" /etc/haproxy/haproxy.cfg
 systemctl daemon-reload
 systemctl enable haproxy.service
 systemctl start haproxy.service
+systemctl status haproxy.service
 
 echo "..... wait lkl linux to wakeup"
 sleep 5
@@ -72,12 +73,16 @@ install -m644 $__dir/confs/*.json /etc/shadowsocks-libev
 sed -i "s/##PORT##/$PORT/; s/##PASS##/$PASS/;" /etc/shadowsocks-libev/ss.json 
 systemctl enable shadowsocks-libev-server@ss
 systemctl start shadowsocks-libev-server@ss
+systemctl status shadowsocks-libev-server@ss.service
 
 # iptables
 install -m644 $__dir/confs/iptables /etc/sysconfig/
+sed -i "s/##PORT##/$PORT/" /etc/sysconfig/iptables
+systemctl stop firewalld || true
 systemctl disable firewalld || true
 systemctl enable iptables
 systemctl restart iptables
+systemctl status iptables
 
 # sysctl
 if ! sysctl net.ipv4.ip_forward | grep '= 1'; then
