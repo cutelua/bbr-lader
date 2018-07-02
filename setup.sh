@@ -145,20 +145,24 @@ menu () {
   select ACTION in SS SS_LKL SS_KCP SS_LKL_KCP REMOVE_LKL; do
     case $ACTION in
       "SS")
+        userinput
         setup_ss
         break
         ;;
       "SS_LKL")
+        userinput
         setup_ss
         setup_lkl
         break
         ;;
       "SS_KCP")
+        userinput
         setup_ss
         setup_kcp
         break
         ;;
       "SS_LKL_KCP")
+        userinput
         setup_ss
         setup_kcp
         setup_lkl
@@ -173,7 +177,6 @@ menu () {
 
 main () {
   os_check
-  userinput
   menu
 }
 
