@@ -1,0 +1,129 @@
+diff --git a/rpm/SPECS/shadowsocks-libev.spec.in b/rpm/SPECS/shadowsocks-libev.spec.in
+index 5be416d..3c11da8 100644
+--- a/rpm/SPECS/shadowsocks-libev.spec.in
++++ b/rpm/SPECS/shadowsocks-libev.spec.in
+@@ -1,4 +1,10 @@
+-%global requires   pcre openssl mbedtls libsodium >= 1.0.4 libev c-ares
++###########################################################
++%define use_system_lib 0
++%define mbedtlsdir   %{getenv:HOME}/mbedtls-2.11.0
++%define libsodiumdir %{getenv:HOME}/libsodium-1.0.16
++###########################################################
++
++%global requires   pcre openssl libev c-ares
+ %global conflicts  python-shadowsocks python3-shadowsocks
+ %if 0%{?fedora} || 0%{?rhel}
+ %global requires   %{?requires} libcap
+@@ -24,7 +30,7 @@ License:	    GPLv3+
+ URL:		    https://github.com/shadowsocks/%{name}
+ Source0:	    @SOURCE@
+ 
+-BuildRequires:	make gcc pcre-devel asciidoc xmlto automake libtool mbedtls-devel libsodium-devel >= 1.0.4 libev-devel c-ares-devel
++BuildRequires:	make gcc pcre-devel asciidoc xmlto automake libtool libev-devel c-ares-devel
+ %if 0%{?suse_version}
+ BuildRequires:  libopenssl-devel
+ %else
+@@ -51,15 +57,22 @@ BuildRequires:   systemd
+ %setup -q -n @NAME_VERSION@
+ 
+ %build
++sed -i 's|-lmbedcrypto|%{mbedtlsdir}/library/libmbedcrypto.a|g' m4/mbedtls.m4
++sed -i 's|-lsodium|%{libsodiumdir}/src/libsodium/.libs/libsodium.a|g' m4/sodium.m4
++
+ ./autogen.sh
++sed -i 's|-lmbedcrypto|%{mbedtlsdir}/library/libmbedcrypto.a|g' configure
+ 
+ %if 0%{?use_system_lib}
+-%configure --enable-shared --enable-system-shared-lib
++%configure --enable-shared --enable-system-shared-lib --disable-silent-rules
+ %else
+-%configure --enable-shared
++%configure --disable-silent-rules --with-sodium=%{libsodiumdir} --with-mbedtls=%{mbedtlsdir}
+ %endif
+-make %{?_smp_mflags}
+ 
++sed -i 's|-lsodium||g' Makefile
++sed -i 's|-lsodium||g' src/Makefile
++
++make %{?_smp_mflags}
+ 
+ %install
+ make install DESTDIR=%{buildroot}
+@@ -142,14 +155,21 @@ fi
+ %endif
+ 
+ %files
+-%doc %{_docdir}/shadowsocks-libev/*.html
++%exclude %{_docdir}/shadowsocks-libev/*.html
+ %exclude %{_docdir}/shadowsocks-libev/ss-nat.html
+-%{_bindir}/*
+ %exclude %{_bindir}/ss-nat
++%exclude %{_bindir}/ss-nat
++%exclude %{_datadir}/*
++%exclude %{_mandir}/man*/*
++%exclude %{_libdir}/*so*
++%exclude %{_libdir}/*.a
++%exclude %{_libdir}/*.la
++%exclude %{_includedir}/*
++%exclude %{_libdir}/pkgconfig/*.pc
++
++%{_bindir}/*
+ %config(noreplace) %{_sysconfdir}/shadowsocks-libev/config.json
+-%{_datadir}/bash-completion/completions/*
+-%doc %{_mandir}/man*/*
+-%exclude %{_mandir}/man1/ss-nat.1.*
++
+ %if ! 0%{?use_systemd}
+ %{_initddir}/shadowsocks-libev
+ %else
+@@ -161,48 +181,10 @@ fi
+ %package -n libshadowsocks-libev
+ Summary:        %{?summary} (shared library)
+ AutoReq:        no
+-Requires:       pcre openssl mbedtls libsodium >= 1.0.4 libev c-ares
++#Requires:       pcre openssl mbedtls libsodium >= 1.0.4 libev c-ares
++Requires:       pcre openssl libev c-ares
+ 
+ %description -n libshadowsocks-libev
+ Shared library powered by shadowsocks-libev.
+ %{?project_desc}
+ 
+-%files -n libshadowsocks-libev
+-%{_libdir}/*.so.*
+-
+-%post -n libshadowsocks-libev
+-/sbin/ldconfig
+-
+-%postun -n libshadowsocks-libev
+-/sbin/ldconfig
+-
+-
+-%package -n libshadowsocks-libev-devel
+-Summary:    Development files for shadowsocks-libev
+-Provides:   shadowsocks-libev-devel = %{version}-%{release}
+-Requires:   libshadowsocks-libev = %{version}-%{release}
+-Obsoletes:  shadowsocks-libev-devel < %{version}-%{release}
+-
+-%description -n libshadowsocks-libev-devel
+-Development files for libshadowsocks-libev.
+-%{?project_desc}
+-
+-%files -n libshadowsocks-libev-devel
+-%{_includedir}/*
+-%{_libdir}/pkgconfig/*.pc
+-%{_libdir}/libshadowsocks-libev.la
+-%{_libdir}/libshadowsocks-libev.so
+-
+-%package zsh-completion
+-Summary:        This package installs zsh completion files for shadowsocks-libev.
+-Requires:       zsh shadowsocks-libev = %{version}-%{release}
+-
+-%description zsh-completion
+-zsh completion files for shadowsocks-libev.
+-%{?project_desc}
+-
+-%files zsh-completion
+-%{_datadir}/zsh/site-functions/*
+-
+-%changelog
+-
