@@ -69,8 +69,9 @@ setup_ss () {
 
 setup_kcp () {
   local kcppkg=$(ls $__dir/progs/kcptun-*|head -n1)
-  tar xvfa $kcppkg server_linux_amd64 -C /tmp/
-  install -m755 /tmp/server_linux_amd64  /usr/local/bin/kcps
+  tar xvfa $kcppkg -C /tmp/ server_linux_amd64
+  install -m755 /tmp/server_linux_amd64 /usr/local/bin/kcps
+  rm -fv /tmp/server_linux_amd64
 
   install -m644 $__dir/confs/kcps.json /etc/
   install -m644 $__dir/confs/kcps.service /etc/systemd/system/
