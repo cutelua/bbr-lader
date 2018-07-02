@@ -1,0 +1,17 @@
+{
+  "listen": ":##PORT##",
+  "target": "127.0.0.1:##PORT##",
+  "key": "##PASS##",
+  "crypt": "xor",
+  "mode": "fast",
+  "mtu": 1350,
+  "sndwnd": 256,
+  "rcvwnd": 256,
+  "datashard": 10,
+  "parityshard": 0,
+  "dscp": 0,
+  "nocomp": true,
+  "interval": 20,
+  "quiet": true,
+  "keepalive": 10
+}

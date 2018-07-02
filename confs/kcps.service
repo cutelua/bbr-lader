@@ -1,0 +1,11 @@
+[Unit]
+Description=kcp
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/local/bin/kcps -c /etc/kcps.json
+
+[Install]
+WantedBy=multi-user.target
