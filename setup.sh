@@ -81,6 +81,11 @@ setup_kcp () {
   systemctl enable kcps.service
   systemctl start kcps.service
   systemctl status kcps.service
+
+  if command -v python2; then
+    echo "KCP Client Options:"
+    python2 $__dir/progs/kcpargs.py /etc/kcps.json
+  fi
 }
 
 setup_lkl () {
@@ -165,8 +170,8 @@ menu () {
       "SS_LKL_KCP")
         userinput
         setup_ss
-        setup_kcp
         setup_lkl
+        setup_kcp
         break
         ;;
       "REMOVE_LKL")
