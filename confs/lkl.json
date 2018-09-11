@@ -1,0 +1,21 @@
+{
+       "debug":"1",
+       "singlecpu":"1",
+       "sysctl":"net.ipv4.tcp_wmem=4096 87380 2147483647",
+       "boot_cmdline":"",
+       "interfaces":[
+               {
+                       "mac":"12:34:56:78:9a:bc",
+                       "type":"tap",
+                       "param":"tap0",
+                       "ip":"10.0.0.2",
+                       "masklen":"24",
+                       "ifgateway":"10.0.0.1",
+                       "ipv6":"fc00::2",
+                       "masklen6":"80",
+                       "ifgateway6":"fe80::5c21:54ff:fe8a:e3f8",
+                       "offload":"0xc803"
+               }
+       ]
+}
+

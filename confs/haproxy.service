@@ -4,13 +4,7 @@ After=syslog.target network.target
 
 [Service]
 Environment=LD_PRELOAD=/usr/local/lib64/liblkl-hijack.so
-Environment=LKL_HIJACK_DEBUG=1
-Environment=LKL_HIJACK_NET_IFTYPE=tap
-Environment=LKL_HIJACK_NET_IFPARAMS=tap0
-Environment=LKL_HIJACK_NET_IP=10.0.0.2
-Environment=LKL_HIJACK_NET_NETMASK_LEN=29
-Environment=LKL_HIJACK_NET_GATEWAY=10.0.0.1
-Environment=LKL_HIJACK_OFFLOAD=0x8883
+Environment=LKL_HIJACK_CONFIG_FILE=/etc/lkl.json
 ExecStart=/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid $OPTIONS
 
 [Install]

@@ -100,6 +100,7 @@ setup_lkl () {
   
   install -m644 $__dir/confs/haproxy.cfg /etc/haproxy/
   install -m644 $__dir/confs/haproxy.service /etc/systemd/system/
+  install -m644 $__dir/confs/lkl.json /etc/
   sed -i "s/##PORT##/$PORT/" /etc/haproxy/haproxy.cfg
 
   systemctl daemon-reload
